@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Book Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+  </head>
+  <body onload="onInit()">
+    <div class="main-content">
+      <header>
+        <h1>Book Shop</h1>
+      </header>
+      <section class="filter">
+        <p>Filter:</p>
+        <select onchange="onSetFilterBy(this)">
+          <option value="">All</option>
+          <option value="active">Active</option>
+          <option value="done">Complete</option>
+        </select>
+      </section>
+      <form onsubmit="onAddBook(event)" class="add-book">
+        <input type="text" autofocus placeholder="Book name" />
+        <input type="text" autofocus placeholder="Book price" />
+        <input type="text" autofocus placeholder="Book img url" />
+        <button>Add</button>
+      </form>
+
+      <table class="book-list">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody class="book-container"></tbody>
+      </table>
+
+      <dialog class="book-details">
+        <form method="dialog">
+          <h2>Book Details</h2>
+          <pre></pre>
+          <button>x</button>
+        </form>
+      </dialog>
+      <footer>
+        <p>Coffee rights &copy;</p>
+      </footer>
+    </div>
+    <script src="services/book.util.js"></script>
+    <script src="services/book.services.js"></script>
+    <script src="services/storage.services.js"></script>
+    <script src="book.controller.js"></script>
+  </body>
+</html>
