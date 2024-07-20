@@ -7,11 +7,6 @@ body {
   margin: 0;
   padding: 0;
   height: 100vw;
-  background-image: var(--body-color);
-  /* CR on this  */
-  /* background-repeat:no-repeat;
-  background-size: cover; 
-  background-size: 100% 100%;  */
 }
 
 body {
@@ -24,7 +19,6 @@ body {
   flex-direction: column;
   width: 100vw;
   gap: 10px;
-  overflow-x: hidden;
 }
 
 .book-list {
@@ -37,24 +31,12 @@ body {
 
 .book-list th,
 .book-list td {
-  border: 1px solid #ddd;
+  border: 3px solid white;
   padding: 8px;
 }
 
-.book-list th {
-  background-color: #f2f2f2;
-  color: black;
-}
-
-.book-list tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.book-list tr:hover {
-  background-color: #ddd;
-}
-
-.book-list .actions button {
+.book-list .actions button,
+.add-new-btn {
   margin-right: 5px;
   padding: 5px 10px;
   border: none;
@@ -64,13 +46,16 @@ body {
 }
 
 .book-list .actions button:nth-child(1) {
-  background-color: #1e90ff; /* צבע כפתור "Read" */
+  background-color: #1e90ff;
 }
 
 .book-list .actions button:nth-child(2) {
-  background-color: #ffd700; /* צבע כפתור "Update" */
+  background-color: #ffd700;
 }
 
 .book-list .actions button:nth-child(3) {
-  background-color: #ff4500; /* צבע כפתור "Delete" */
+  background-color: #ff4500;
+}
+.add-new-btn {
+  background-color: darkgreen;
 }

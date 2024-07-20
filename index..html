@@ -20,13 +20,7 @@
           <option value="done">Complete</option>
         </select>
       </section>
-      <form onsubmit="onAddBook(event)" class="add-book">
-        <input type="text" autofocus placeholder="Book name" />
-        <input type="text" autofocus placeholder="Book price" />
-        <input type="text" autofocus placeholder="Book img url" />
-        <button>Add</button>
-      </form>
-
+      <button class="add-new-btn" onclick="onAddOrUpdateBook()">Add book</button>
       <table class="book-list">
         <thead>
           <tr>
@@ -41,8 +35,29 @@
       <dialog class="book-details">
         <form method="dialog">
           <h2>Book Details</h2>
+          <form onsubmit="onAddBook()" class="add-book">
+            <table>
+              <tr>
+                <td><label>Book Name:</label></td>
+                <td><input type="text" class="book-name-txt" autofocus placeholder="Book name" /></td>
+              </tr>
+              <tr>
+                <td><label>Book Price:</label></td>
+                <td><input type="text" class="book-price-txt" autofocus placeholder="Book price" /></td>
+              </tr>
+              <tr>
+                <td><label>Book Img URL:</label></td>
+                <td><input type="text" class="book-img-url-txt" autofocus placeholder="Book img url" /></td>
+              </tr>
+              <tr>
+                <td>
+                  <button class="add-btn" onclick="addBook()">Add</button>
+                </td>
+              </tr>
+            </table>
+          </form>
           <pre></pre>
-          <button>x</button>
+          <button type="button" onclick="closeModal()">x</button>
         </form>
       </dialog>
       <footer>
