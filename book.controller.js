@@ -31,6 +31,7 @@ function renderBooks() {
   }
   elBooks.innerHTML = strHTMLs
   document.querySelector('.filter-count').textContent = 'Count filter result: ' + books.length
+  updatePriceRanges()
 }
 
 function onRemoveBook(id) {
@@ -143,4 +144,10 @@ function showPopup(message) {
       popup.style.display = 'none'
     }, 500)
   }, 3000)
+}
+
+function updatePriceRanges() {
+  document.querySelector('.below-80-count').textContent = countBooksBelow80()
+  document.querySelector('.between-80-200-count').textContent = countBooksBetween80And200()
+  document.querySelector('.above-200-count').textContent = countBooksAbove200()
 }

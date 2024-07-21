@@ -335,3 +335,18 @@ function removeBook(id) {
   books.splice(indexBook, 1)
   saveBooksToLocalStorage(books)
 }
+
+function countBooksBelow80() {
+  var books = getBooksFromLocalStorage()
+  return books.filter((book) => book.price < 50).length
+}
+
+function countBooksBetween80And200() {
+  var books = getBooksFromLocalStorage()
+  return books.filter((book) => book.price >= 50 && book.price <= 150).length
+}
+
+function countBooksAbove200() {
+  var books = getBooksFromLocalStorage()
+  return books.filter((book) => book.price > 150).length
+}

@@ -220,6 +220,14 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+.price-ranges-table {
+  padding: 10px;
+  margin: 5px 0;
+  border: 10px solid white;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
 .popup-message {
   position: fixed;
   bottom: 20px;
