@@ -2,20 +2,34 @@
 
 function renderBooks() {
   const elBooks = document.querySelector('.book-container')
-  const strHTMLs = getBooks().map((book) => {
-    return `<tr> 
-              <td>${book.title}</td>
-              <td>$${book.price}</td>
-              <td>${book.rating} ★</td>
-              <td>${book.countReview} Reviews</td>
-              <td class="actions">
-                <button onclick="onShowDetails('${book.id}')" >Read</button>
-                <button onclick="onAddOrUpdateBook('${book.id}')" >Update</button>
-                <button onclick="onRemoveBook('${book.id}')" >Delete</button>
-              </td>
+  const filterTitle = document.querySelector('.filterTitle').value
+  const filterText = document.querySelector('.filterText').value
+  const minPrice = document.querySelector('.minPrice').value
+  const minReviews = document.querySelector('.minReviews').value
+  const minRating = document.querySelector('.minRating').value
+
+  const books = getBooks(filterTitle, filterText, minPrice, minReviews, minRating)
+  let strHTMLs
+  if (books.length !== 0) {
+    strHTMLs = books
+      .map((book) => {
+        return `<tr> 
+                <td>${book.title}</td>
+                <td>$${book.price}</td>
+                <td>${book.rating} ★</td>
+                <td>${book.countReview} Reviews</td>
+                <td class="actions">
+                    <button onclick="onShowDetails('${book.id}')">Read</button>
+                    <button onclick="onAddOrUpdateBook('${book.id}')">Update</button>
+                    <button onclick="onRemoveBook('${book.id}')">Delete</button>
+                </td>
             </tr>`
-  })
-  elBooks.innerHTML = strHTMLs.join('')
+      })
+      .join('')
+  } else {
+    strHTMLs = `<tr><td colspan="5"><h2>No matching books were found...</h2></td></tr>`
+  }
+  elBooks.innerHTML = strHTMLs
 }
 
 function onRemoveBook(id) {
@@ -27,12 +41,12 @@ function onAddOrUpdateBook(id = null) {
   document.querySelector('.book-update').showModal()
   if (id === null) {
     document.querySelector('.add-btn').outerHTML = `<button class="add-btn" onclick="addNewBook()">Add new book</button>`
-    document.querySelector('.book-name-txt').value = ''
-    document.querySelector('.book-price-txt').value = ''
-    document.querySelector('.book-img-url-txt').value = ''
-    document.querySelector('.book-info-txt').value = ''
-    document.querySelector('.book-rating-txt').value = ''
-    document.querySelector('.book-count-review-txt').value = ''
+    document.querySelector('.book-name-txt').value = null
+    document.querySelector('.book-price-txt').value = null
+    document.querySelector('.book-img-url-txt').value = null
+    document.querySelector('.book-info-txt').value = null
+    document.querySelector('.book-rating-txt').value = null
+    document.querySelector('.book-count-review-txt').value = null
   } else {
     var book = getBook(id)
     document.querySelector('.add-btn').outerHTML = `<button class="add-btn" onclick="addNewBook('${id}')">Update book details</button>`
@@ -55,15 +69,16 @@ function addNewBook(id = null) {
     updateBook(id, title, price, imgUrl, info)
   }
   closeModalUpdate()
-  renderBooks()
 }
 
 function closeModalUpdate() {
   document.querySelector('.book-update').close()
+  renderBooks()
 }
 
 function closeModalDetails() {
   document.querySelector('.book-details').close()
+  renderBooks()
 }
 
 function onShowDetails(id) {
@@ -77,4 +92,13 @@ function onShowDetails(id) {
   bookModal.querySelector('.book-info-txt').textContent = book.info
   bookModal.querySelector('.book-rating-txt').textContent = `${book.rating} ★`
   bookModal.querySelector('.book-count-review-txt').textContent = `${book.countReview} Reviews`
+}
+
+function clearFilter() {
+  document.querySelector('.filterTitle').value = ''
+  document.querySelector('.filterText').value = ''
+  document.querySelector('.minPrice').value = ''
+  document.querySelector('.minReviews').value = ''
+  document.querySelector('.minRating').value = ''
+  renderBooks()
 }

@@ -12,6 +12,34 @@
       <header>
         <h1>Book Shop</h1>
       </header>
+      <div class="filter-container">
+        <h2>Filter</h2>
+        <table class="filter-table">
+          <tr>
+            <td><label>Filter by title:</label></td>
+            <td><input type="text" class="filterTitle" placeholder="Type to filter by title..." onchange="renderBooks()" /></td>
+          </tr>
+          <tr>
+            <td><label>Filter by info text:</label></td>
+            <td><input type="text" class="filterText" placeholder="Type to filter by text..." onchange="renderBooks()" /></td>
+          </tr>
+          <tr>
+            <td><label>Minimum Price:</label></td>
+            <td><input type="number" class="minPrice" placeholder="Minimum Price" min="0" onchange="renderBooks()" /></td>
+          </tr>
+          <tr>
+            <td><label>Minimum Reviews:</label></td>
+            <td><input type="number" class="minReviews" placeholder="Minimum Reviews" min="0" onchange="renderBooks()" /></td>
+          </tr>
+          <tr>
+            <td><label>Minimum Rating:</label></td>
+            <td><input type="number" class="minRating" placeholder="Minimum Rating" min="0" max="5" step="0.1" onchange="renderBooks()" /></td>
+          </tr>
+          <tr>
+            <td><button type="button" class="clear-btn" onclick="clearFilter()">Clear filler from velues</button></td>
+          </tr>
+        </table>
+      </div>
       <button class="add-new-btn" onclick="onAddOrUpdateBook()">Add book</button>
       <table class="book-list">
         <thead>
