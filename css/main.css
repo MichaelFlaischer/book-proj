@@ -220,3 +220,15 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
+.popup-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+}

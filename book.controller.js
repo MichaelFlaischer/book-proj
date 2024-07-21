@@ -30,11 +30,13 @@ function renderBooks() {
     strHTMLs = `<tr><td colspan="5"><h2>No matching books were found...</h2></td></tr>`
   }
   elBooks.innerHTML = strHTMLs
+  document.querySelector('.filter-count').textContent = 'Count filter result: ' + books.length
 }
 
 function onRemoveBook(id) {
   removeBook(id)
   renderBooks()
+  showPopup('The book was removed successfully')
 }
 
 function onAddOrUpdateBook(id = null) {
@@ -65,8 +67,10 @@ function addNewBook(id = null) {
 
   if (id === null) {
     addBook(title, price, imgUrl, info)
+    showPopup('The book was added successfully')
   } else {
     updateBook(id, title, price, imgUrl, info)
+    showPopup('The book details were updated successfully')
   }
   closeModalUpdate()
 }
@@ -101,4 +105,20 @@ function clearFilter() {
   document.querySelector('.minReviews').value = ''
   document.querySelector('.minRating').value = ''
   renderBooks()
+  showPopup('Filters were cleared')
+}
+function showPopup(message) {
+  const popup = document.querySelector('.popup-message')
+  popup.textContent = message
+  popup.style.display = 'block'
+  setTimeout(() => {
+    popup.style.opacity = 1
+  }, 10)
+
+  setTimeout(() => {
+    popup.style.opacity = 0
+    setTimeout(() => {
+      popup.style.display = 'none'
+    }, 500)
+  }, 3000)
 }

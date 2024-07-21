@@ -36,7 +36,12 @@
             <td><input type="number" class="minRating" placeholder="Minimum Rating" min="0" max="5" step="0.1" onchange="renderBooks()" /></td>
           </tr>
           <tr>
-            <td><button type="button" class="clear-btn" onclick="clearFilter()">Clear filler from velues</button></td>
+            <td>
+              <button type="button" class="clear-btn" onclick="clearFilter()">Clear filter values</button>
+            </td>
+            <td>
+              <h2 class="filter-count"></h2>
+            </td>
           </tr>
         </table>
       </div>
@@ -111,6 +116,7 @@
           <button type="button" onclick="closeModalDetails()">x</button>
         </form>
       </dialog>
+      <div class="popup-message"></div>
       <footer>
         <p>Coffee rights &copy;</p>
       </footer>
