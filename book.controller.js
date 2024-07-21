@@ -42,7 +42,7 @@ function onRemoveBook(id) {
 function onAddOrUpdateBook(id = null) {
   document.querySelector('.book-update').showModal()
   if (id === null) {
-    document.querySelector('.add-btn').outerHTML = `<button class="add-btn" onclick="addNewBook()">Add new book</button>`
+    document.querySelector('.add-btn').outerHTML = `<button class="add-btn" onclick="addNewBook(event)">Add new book</button>`
     document.querySelector('.book-name-txt').value = null
     document.querySelector('.book-price-txt').value = null
     document.querySelector('.book-img-url-txt').value = null
@@ -51,7 +51,7 @@ function onAddOrUpdateBook(id = null) {
     document.querySelector('.book-count-review-txt').value = null
   } else {
     var book = getBook(id)
-    document.querySelector('.add-btn').outerHTML = `<button class="add-btn" onclick="addNewBook('${id}')">Update book details</button>`
+    document.querySelector('.add-btn').outerHTML = `<button class="add-btn" onclick="addNewBook(event,'${id}')">Update book details</button>`
     document.querySelector('.book-name-txt').value = book.title
     document.querySelector('.book-price-txt').value = book.price
     document.querySelector('.book-img-url-txt').value = book.imgUrl
@@ -59,20 +59,42 @@ function onAddOrUpdateBook(id = null) {
   }
 }
 
-function addNewBook(id = null) {
+function addNewBook(event, id = null) {
+  event.preventDefault()
+
+  var valuesOk = true
   var title = document.querySelector('.book-name-txt').value
   var price = document.querySelector('.book-price-txt').value
   var imgUrl = document.querySelector('.book-img-url-txt').value
   var info = document.querySelector('.book-info-txt').value
 
-  if (id === null) {
-    addBook(title, price, imgUrl, info)
-    showPopup('The book was added successfully')
-  } else {
-    updateBook(id, title, price, imgUrl, info)
-    showPopup('The book details were updated successfully')
+  if (info.length === 0) {
+    valuesOk = false
+    showPopup('Info is required')
   }
-  closeModalUpdate()
+  if (imgUrl.length === 0) {
+    valuesOk = false
+    showPopup('Image URL is required')
+  }
+  if (price.length === 0) {
+    valuesOk = false
+    showPopup('Price is required')
+  }
+  if (title.length === 0) {
+    valuesOk = false
+    showPopup('Title is required')
+  }
+
+  if (valuesOk) {
+    if (id === null) {
+      addBook(title, price, imgUrl, info)
+      showPopup('The book was added successfully')
+    } else {
+      updateBook(id, title, price, imgUrl, info)
+      showPopup('The book details were updated successfully')
+    }
+    closeModalUpdate()
+  }
 }
 
 function closeModalUpdate() {
