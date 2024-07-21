@@ -71,7 +71,7 @@ function onShowDetails(id) {
   bookModal.showModal()
   var book = getBook(id)
   var imgUrl = document.querySelector('.book-img')
-  imgUrl.innerHTML = `<img src="${book.imgUrl}" onerror="this.onerror=null; this.src='img/error.jpg';" alt="Book Image">`
+  imgUrl.innerHTML = `<img src="img/${book.imgUrl}" onerror="this.onerror=null; this.src='img/error.jpg';" alt="Book Image">`
   bookModal.querySelector('.book-name-txt').textContent = book.title
   bookModal.querySelector('.book-price-txt').textContent = `$${book.price}`
   bookModal.querySelector('.book-info-txt').textContent = book.info
