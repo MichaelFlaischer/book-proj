@@ -12,52 +12,75 @@
       <header>
         <h1>Book Shop</h1>
       </header>
-      <section class="filter">
-        <p>Filter:</p>
-        <select onchange="onSetFilterBy(this)">
-          <option value="">All</option>
-          <option value="active">Active</option>
-          <option value="done">Complete</option>
-        </select>
-      </section>
       <button class="add-new-btn" onclick="onAddOrUpdateBook()">Add book</button>
       <table class="book-list">
         <thead>
           <tr>
             <th>Title</th>
             <th>Price</th>
+            <th>Rating</th>
+            <th>Reviews</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody class="book-container"></tbody>
       </table>
 
+      <dialog class="book-update">
+        <form method="dialog" class="add-book">
+          <h2>Book Details</h2>
+          <table>
+            <tr>
+              <td><label>Book Name:</label></td>
+              <td><input type="text" class="book-name-txt" autofocus placeholder="Book name" /></td>
+            </tr>
+            <tr>
+              <td><label>Book Price:</label></td>
+              <td><input type="number" class="book-price-txt" autofocus placeholder="Book price" /></td>
+            </tr>
+            <tr>
+              <td><label>Book Img URL:</label></td>
+              <td><input type="text" class="book-img-url-txt" autofocus placeholder="Book img url" /></td>
+            </tr>
+            <tr>
+              <td><label>Book Info:</label></td>
+              <td><textarea class="book-info-txt" rows="4" cols="25" placeholder="Book info"></textarea></td>
+            </tr>
+          </table>
+          <button type="submit" class="add-btn">Update</button>
+          <button type="button" class="close-btn" onclick="closeModalUpdate()">x</button>
+        </form>
+      </dialog>
+
       <dialog class="book-details">
         <form method="dialog">
           <h2>Book Details</h2>
-          <form onsubmit="onAddBook()" class="add-book">
-            <table>
-              <tr>
-                <td><label>Book Name:</label></td>
-                <td><input type="text" class="book-name-txt" autofocus placeholder="Book name" /></td>
-              </tr>
-              <tr>
-                <td><label>Book Price:</label></td>
-                <td><input type="text" class="book-price-txt" autofocus placeholder="Book price" /></td>
-              </tr>
-              <tr>
-                <td><label>Book Img URL:</label></td>
-                <td><input type="text" class="book-img-url-txt" autofocus placeholder="Book img url" /></td>
-              </tr>
-              <tr>
-                <td>
-                  <button class="add-btn" onclick="addBook()">Add</button>
-                </td>
-              </tr>
-            </table>
-          </form>
-          <pre></pre>
-          <button type="button" onclick="closeModal()">x</button>
+          <table>
+            <tr>
+              <td class="book-img"></td>
+            </tr>
+            <tr>
+              <td><label>Book Name:</label></td>
+              <td class="book-name-txt"></td>
+            </tr>
+            <tr>
+              <td><label>Book Price:</label></td>
+              <td class="book-price-txt"></td>
+            </tr>
+            <tr>
+              <td><label>Book Info:</label></td>
+              <td class="book-info-txt"></td>
+            </tr>
+            <tr>
+              <td><label>Book Rating:</label></td>
+              <td class="book-rating-txt"></td>
+            </tr>
+            <tr>
+              <td><label>Review Count:</label></td>
+              <td class="book-count-review-txt"></td>
+            </tr>
+          </table>
+          <button type="button" onclick="closeModalDetails()">x</button>
         </form>
       </dialog>
       <footer>
