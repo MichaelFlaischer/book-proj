@@ -1,14 +1,47 @@
 'use strict'
 
-function renderBooks() {
+function renderBooks(updatedTitle = null, updatedInfo = null, updatedPrice = null, updatedReviews = null, updatedRating = null) {
+  let books
   const elBooks = document.querySelector('.book-container')
-  const filterTitle = document.querySelector('.filterTitle').value
-  const filterText = document.querySelector('.filterText').value
-  const minPrice = document.querySelector('.minPrice').value
-  const minReviews = document.querySelector('.minReviews').value
-  const minRating = document.querySelector('.minRating').value
+  let filterTitle
+  let filterText
+  let minPrice
+  let minReviews
+  let minRating
 
-  const books = getBooks(filterTitle, filterText, minPrice, minReviews, minRating)
+  if (updatedTitle) {
+    filterTitle = updatedTitle
+    document.querySelector('.filterTitle').value = filterTitle
+  } else {
+    filterTitle = document.querySelector('.filterTitle').value
+  }
+  if (updatedInfo) {
+    filterText = updatedInfo
+    document.querySelector('.filterText').value = filterText
+  } else {
+    filterText = document.querySelector('.filterText').value
+  }
+  if (updatedPrice) {
+    minPrice = updatedPrice
+    document.querySelector('.minPrice').value = minPrice
+  } else {
+    minPrice = document.querySelector('.minPrice').value
+  }
+  if (updatedReviews) {
+    minReviews = updatedReviews
+    document.querySelector('.minReviews').value = minReviews
+  } else {
+    minReviews = document.querySelector('.minReviews').value
+  }
+  if (updatedRating) {
+    minRating = updatedRating
+    document.querySelector('.minRating').value = minRating
+  } else {
+    minRating = document.querySelector('.minRating').value
+  }
+
+  books = getBooks(filterTitle, filterText, minPrice, minReviews, minRating)
+
   let strHTMLs
   if (books.length !== 0) {
     strHTMLs = books
@@ -34,6 +67,16 @@ function renderBooks() {
   updatePriceRanges()
 }
 
+function renderSearchUrl() {
+  const updatedSearchParams = new URLSearchParams(window.location.search)
+  var updatedTitle = updatedSearchParams.get('title')
+  var updatedInfo = updatedSearchParams.get('info')
+  var updatedPrice = updatedSearchParams.get('price')
+  var updatedReviews = updatedSearchParams.get('rewiews')
+  var updatedRating = updatedSearchParams.get('rating')
+
+  renderBooks(updatedTitle, updatedInfo, updatedPrice, updatedReviews, updatedRating)
+}
 function onRemoveBook(id) {
   removeBook(id)
   renderBooks()
@@ -150,4 +193,9 @@ function updatePriceRanges() {
   document.querySelector('.below-80-count').textContent = countBooksBelow80()
   document.querySelector('.between-80-200-count').textContent = countBooksBetween80And200()
   document.querySelector('.above-200-count').textContent = countBooksAbove200()
+}
+
+function toggleFilter() {
+  const filterContainer = document.querySelector('.filter-container')
+  filterContainer.classList.toggle('hidden')
 }

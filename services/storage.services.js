@@ -1,5 +1,5 @@
 'use strict'
-
+var page = 0
 function saveBooksToLocalStorage(books) {
   localStorage.setItem('books', JSON.stringify(books))
 }
@@ -288,22 +288,42 @@ function getBooksFromLocalStorage() {
 }
 
 function getBooks(title = null, info = null, price = null, rewiews = null, rating = null) {
+  const searchParams = new URLSearchParams(window.location.search)
+
   var books = getBooksFromLocalStorage()
   if (title != '' && title != null) {
     books = books.filter((book) => book.title.toLowerCase().includes(title.toLowerCase()))
+    searchParams.set('title', title)
+  } else {
+    searchParams.delete('title')
   }
   if (info != null && info != '') {
     books = books.filter((book) => book.info.toLowerCase().includes(info.toLowerCase()))
+    searchParams.set('info', info)
+  } else {
+    searchParams.delete('info')
   }
   if (price != null && price != 0) {
     books = books.filter((book) => book.price > price)
+    searchParams.set('price', price)
+  } else {
+    searchParams.delete('price')
   }
   if (rewiews != null && rewiews != 0) {
     books = books.filter((book) => book.countReview > rewiews)
+    searchParams.set('rewiews', rewiews)
+  } else {
+    searchParams.delete('rewiews')
   }
   if (rating != null && rating != 0) {
     books = books.filter((book) => book.rating > rating)
+    searchParams.set('rating', rating)
+  } else {
+    searchParams.delete('rating')
   }
+  const newUrl = window.location.pathname + '?' + searchParams.toString()
+  window.history.replaceState({}, '', newUrl)
+
   return books
 }
 
