@@ -173,6 +173,7 @@ function clearFilter() {
   document.querySelector('.minPrice').value = ''
   document.querySelector('.minReviews').value = ''
   document.querySelector('.minRating').value = ''
+  page = 1
   renderBooks()
   showPopup('Filters were cleared')
 }
@@ -201,4 +202,8 @@ function updatePriceRanges() {
 function toggleFilter() {
   const filterContainer = document.querySelector('.filter-container')
   filterContainer.classList.toggle('hidden')
+}
+
+function renderFilterCount(count) {
+  document.querySelector('.filter-count').textContent = 'Count filter result: ' + count
 }
