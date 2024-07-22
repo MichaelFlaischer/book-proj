@@ -63,8 +63,11 @@ function renderBooks(updatedTitle = null, updatedInfo = null, updatedPrice = nul
     strHTMLs = `<tr><td colspan="5"><h2>No matching books were found...</h2></td></tr>`
   }
   elBooks.innerHTML = strHTMLs
-  document.querySelector('.filter-count').textContent = 'Count filter result: ' + books.length
   updatePriceRanges()
+}
+
+function renderFilterCount(countBooks) {
+  document.querySelector('.filter-count').textContent = 'Count filter result: ' + countBooks
 }
 
 function renderSearchUrl() {

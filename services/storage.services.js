@@ -1,5 +1,8 @@
 'use strict'
 var page = 0
+var maxPages = 1
+const RESULTS_PER_PAGE = 5
+
 function saveBooksToLocalStorage(books) {
   localStorage.setItem('books', JSON.stringify(books))
 }
@@ -287,60 +290,108 @@ function getBooksFromLocalStorage() {
   return books
 }
 
-function getBooks(title = null, info = null, price = null, rewiews = null, rating = null) {
-  const searchParams = new URLSearchParams(window.location.search)
-
-  var books = getBooksFromLocalStorage()
-  if (title != '' && title != null) {
+function filterBooksByTitle(books, title) {
+  if (title !== '' && title !== null) {
     books = books.filter((book) => book.title.toLowerCase().includes(title.toLowerCase()))
-    searchParams.set('title', title)
+    updateURLParam('title', title)
   } else {
-    searchParams.delete('title')
+    updateURLParam('title', '')
   }
-  if (info != null && info != '') {
-    books = books.filter((book) => book.info.toLowerCase().includes(info.toLowerCase()))
-    searchParams.set('info', info)
-  } else {
-    searchParams.delete('info')
-  }
-  if (price != null && price != 0) {
-    books = books.filter((book) => book.price > price)
-    searchParams.set('price', price)
-  } else {
-    searchParams.delete('price')
-  }
-  if (rewiews != null && rewiews != 0) {
-    books = books.filter((book) => book.countReview > rewiews)
-    searchParams.set('rewiews', rewiews)
-  } else {
-    searchParams.delete('rewiews')
-  }
-  if (rating != null && rating != 0) {
-    books = books.filter((book) => book.rating > rating)
-    searchParams.set('rating', rating)
-  } else {
-    searchParams.delete('rating')
-  }
-  const newUrl = window.location.pathname + '?' + searchParams.toString()
-  window.history.replaceState({}, '', newUrl)
-
   return books
 }
 
+function filterBooksByInfo(books, info) {
+  if (info !== '' && info !== null) {
+    books = books.filter((book) => book.info.toLowerCase().includes(info.toLowerCase()))
+    updateURLParam('info', info)
+  } else {
+    updateURLParam('info', '')
+  }
+  return books
+}
+
+function filterBooksByPrice(books, price) {
+  if (price !== null && price != 0) {
+    books = books.filter((book) => book.price > parseFloat(price))
+    updateURLParam('price', price)
+  } else {
+    updateURLParam('price', '')
+  }
+  return books
+}
+
+function filterBooksByReviews(books, reviews) {
+  if (reviews !== null && reviews != 0) {
+    books = books.filter((book) => book.countReview > parseInt(reviews))
+    updateURLParam('reviews', reviews)
+  } else {
+    updateURLParam('reviews', '')
+  }
+  return books
+}
+
+function filterBooksByRating(books, rating) {
+  if (rating !== null && rating != 0) {
+    books = books.filter((book) => book.rating > parseFloat(rating))
+    updateURLParam('rating', rating)
+  } else {
+    updateURLParam('rating', '')
+  }
+  return books
+}
+
+function updateURLParam(key, value) {
+  const searchParams = new URLSearchParams(window.location.search)
+  if (value) {
+    searchParams.set(key, value)
+  } else {
+    searchParams.delete(key)
+  }
+  const newUrl = window.location.pathname + '?' + searchParams.toString()
+  window.history.replaceState({}, '', newUrl)
+}
+
+function paginateBooks(books) {
+  const startIndex = page * RESULTS_PER_PAGE
+  const endIndex = startIndex + RESULTS_PER_PAGE
+  maxPages = Math.ceil(books.length / RESULTS_PER_PAGE)
+  return books.slice(startIndex, endIndex)
+}
+
+function getBooks(title = null, info = null, price = null, reviews = null, rating = null) {
+  var books = getBooksFromLocalStorage()
+
+  books = filterBooksByTitle(books, title)
+  books = filterBooksByInfo(books, info)
+  books = filterBooksByPrice(books, price)
+  books = filterBooksByReviews(books, reviews)
+  books = filterBooksByRating(books, rating)
+  renderFilterCount(books.length)
+
+  if (page >= maxPages) {
+    page = maxPages - 1
+  }
+  return paginateBooks(books)
+}
+
+function renderFilterCount(count) {
+  document.querySelector('.filter-count').textContent = 'Count filter result: ' + count
+}
+
 function getBook(id) {
-  var indexBook = getBooks().findIndex((book) => book.id === id)
+  var indexBook = getBooksFromLocalStorage().findIndex((book) => book.id === id)
   return getBooks()[indexBook]
 }
 
 function addBook(title, price, imgUrl, info, rating = 0, countReview = 0) {
-  var books = getBooks()
+  var books = getBooksFromLocalStorage()
   var id = generateId()
   books.push({ id, title, price, imgUrl, info, rating, countReview })
   saveBooksToLocalStorage(books)
 }
 
 function updateBook(id, title, price, imgUrl, info) {
-  var books = getBooks()
+  var books = getBooksFromLocalStorage()
   var indexBook = books.findIndex((book) => book.id === id)
   books[indexBook].title = title
   books[indexBook].price = price
@@ -369,4 +420,18 @@ function countBooksBetween80And200() {
 function countBooksAbove200() {
   var books = getBooksFromLocalStorage()
   return books.filter((book) => book.price > 150).length
+}
+
+function pageUp() {
+  if (page < maxPages - 1) {
+    page += 1
+  } else page = 0
+  renderBooks()
+}
+
+function pageDown() {
+  if (page > 0) {
+    page -= 1
+  } else page = maxPages - 1
+  renderBooks()
 }
